@@ -12,12 +12,6 @@ Je reste disponible pour en discuter si tu le souhaites.
 
 Cordialement,
 
-Lukasz IGNATOWICZ
-Directeur du département sports
-& référent handicap
-Tél : 01 81 87 19 05 / 06 63 07 12 45
-828, boulevard des Maréchaux - 91120 PALAISEAU
-
 """
 
 
