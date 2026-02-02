@@ -1,14 +1,20 @@
 @echo off
-echo Building EXE...
+echo Building ENSTA Absence Management...
 
-pyinstaller --onefile --windowed --name "ENSTA_Absence_Management" app.py
+REM Build in ONEDIR mode (fast startup)
+pyinstaller --onedir --windowed --clean --name "ENSTA_Absence_Management" app.py
 
-REM Move the exe two folders back (root folder)
-if exist dist\ENSTA_Absence_Management.exe (
-    move /Y dist\ENSTA_Absence_Management.exe ..
-    echo EXE moved successfully to root folder.
+REM Move the generated folder one level up
+if exist dist\ENSTA_Absence_Management (
+    move /Y dist\ENSTA_Absence_Management ..
+    echo Application folder moved successfully.
 ) else (
-    echo ERROR: EXE not found.
+    echo ERROR: Build folder not found.
 )
+
+REM Cleanup build artifacts
+rmdir /S /Q build
+rmdir /S /Q dist
+del ENSTA_Absence_Management.spec
 
 pause
