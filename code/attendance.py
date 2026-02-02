@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def _is_absent_cell(value) -> bool:
-    return "absent" in str(value).strip().lower()
+    return "abs." in str(value).strip().lower()
 
 
 def process_sheet(
