@@ -19,6 +19,8 @@ class AttendanceApp(tk.Tk):
 
         self.excel_path = None
         self.students = []
+        self.semester = tk.StringVar(value="Tous")  # Tous, S1, S2
+
 
         self._setup_styles()
         self._build_header()
@@ -107,6 +109,18 @@ class AttendanceApp(tk.Tk):
         self.min_abs = tk.IntVar(value=2)
         ttk.Entry(options, textvariable=self.min_abs, width=6).pack(side="left", padx=8)'''
 
+        tk.Label(options, text="Semestre:", bg="white").pack(side="left")
+
+        semester_cb = ttk.Combobox(
+            options,
+            textvariable=self.semester,
+            values=["Tous", "S1 (Sep-Jan)", "S2 (Feb-May)"],
+            state="readonly",
+            width=14
+        )
+        semester_cb.current(0)
+        semester_cb.pack(side="left", padx=8)
+
         ttk.Button(
             options,
             text="Scan Attendance",
@@ -193,15 +207,29 @@ class AttendanceApp(tk.Tk):
             messagebox.showwarning("Missing file", "Select an Excel file first.")
             return
 
+        choice = self.semester.get()
+
+        if choice.startswith("S1"):
+            sem = "S1"
+        elif choice.startswith("S2"):
+            sem = "S2"
+        else:
+            sem = None  # Tous
+
         self.students = find_students_with_absences(
             self.excel_path,
-            min_absences=2
+            min_absences=2,
+            semester=sem
         )
+
+
 
         for item in self.tree.get_children():
             self.tree.delete(item)
 
         self.preview.delete("1.0", "end")
+
+        self.preview.insert("end", f"Semestre: {choice}\n")
 
         if not self.students:
             self.preview.insert("end", "No absent students found.\n")
